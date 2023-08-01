@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    {% extends 'base.html' %}
+
+    {% block title %}Log-IN{% endblock %}
+
+    {% block content %}
+        <h1>Log-in</h1>
+        {% if form.errors %}
+            <p>
+                Your username and password didn't match.
+                Please try again.
+            </p>
+        {% else %}
+            <p>Please use the following form to log-in:</p>
+            <form method="post" action="{% url 'login' %}">
+                {{ form.as_p }}
+                {% csrf_token %}
+                <input type="submit" value="LOG IN">
+            </form>
+
+        <p><a href="{% url 'password_reset' %}">Forgotten your password?</a></p>
+        {% endif %}
+    {% endblock %}
+</body>
+</html>
