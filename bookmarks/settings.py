@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import os.path
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -131,3 +131,10 @@ LOGOUT_URL = 'logout'
 # You are using the names of the URL patterns that you previously defined using the name attribute of the path() function.
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# To enable Django to serve media files uploaded by users with the development server
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+# MEDIA_URL is the base URL used to serve the media files uploaded by users, and
+# MEDIA_ROOT is the local path where they reside. You build the path dynamically
+# relative to your project path to make your code more generic.
