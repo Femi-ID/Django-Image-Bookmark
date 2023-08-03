@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
@@ -70,14 +70,15 @@ def edit_form(request):
             user_form.save()
             profile_form.save()
             messages.success(request, 'Profile updated successfully!')
+            return redirect('dashboard')
         else:
             messages.error(request, 'An error occurred when updating your profile')
+            # You can learn more about the messages framework at:
+            # https://docs.djangoproject.com/en/3.0/ref/contrib/messages/.
     else:
         user_form = UserEditForm(instance=request.user)
         profile_form = ProfileEditForm(instance=request.user.profile)
 
-    return render(request, 'account/edit.html', {'user_form': user_form,
-                                                 'profile_form': profile_form})
-# You can learn more about the messages framework at:
-# https://docs.djangoproject.com/en/3.0/ref/contrib/messages/.
+    return render(request, 'account/edit_form.html', {'user_form': user_form,
+                                                      'profile_form': profile_form})
 
