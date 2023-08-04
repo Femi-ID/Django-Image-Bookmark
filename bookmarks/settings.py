@@ -25,8 +25,9 @@ SECRET_KEY = 'django-insecure-jhd8%egj)5&it9++8woc2$&bpq!v#)y7*zhk&!h7ged&x%4j!p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1']
+# Django controls the hosts that are able to serve your application using the ALLOWED_HOSTS setting.
+# This is a security measure to prevent HTTP host header attacks.
 
 # Application definition
 
@@ -38,7 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
+    'django_extensions',
 ]
+
+# In order to test the social authentication functionality serving your site through HTTPS,
+# you are going to use the RunServerPlus extension of the package Django Extensions.
+# Django Extensions is a third-party collection of custom extensions for Django.
 
 MIDDLEWARE = [
     # Middleware are classes with methods that are globally executed during the request or response phase.
@@ -148,9 +155,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'account.authentication.EmailAuthBackend'
+    'account.authentication.EmailAuthBackend',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
 ]
 
-
-
-
+SOCIAL_AUTH_FACEBOOK_KEY = '606087041711702'  # Facebook ID
+SOCIAL_AUTH_FACEBOOK_SECRET_KEY = 'e128912aa8ce6cefdb269b9ec53077a7'  # Facebook Secret Key
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
