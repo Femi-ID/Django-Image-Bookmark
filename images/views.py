@@ -18,17 +18,15 @@ def image_create(request):
 
             # assign current user to the new image  created
             new_item.user = request.user
-
             new_item.save()
             messages.success(request, 'Image added successfully!')
 
             # redirect to the newly created image
-            return redirect(new_item.get_absolute_url)
+            return redirect(new_item.get_absolute_url())
             # TODO: Implement the canonical URL for the image object instance
-
     else:
         # build form with data provided by the bookmarklet via GET
-        form = ImageCreateForm(data=request.POST)
+        form = ImageCreateForm(data=request.GET)
 
     return render(request, 'images/image/create.html', {'section': 'images', 'form': form})
 
