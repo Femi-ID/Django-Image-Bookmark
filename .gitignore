@@ -1,4 +1,6 @@
 db.sqlite3
 bookmarks/__pycache__/
-account/__pycache__
+account/__pycache__/
+images/__pycache__/
 account/migrations/__pycache__/0001_initial.cpython-310.pyc
+media/

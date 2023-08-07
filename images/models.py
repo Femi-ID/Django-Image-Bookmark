@@ -31,7 +31,7 @@ class Image(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:  # if slug field is not provided
             self.slug = slugify(self.title)
-        super(Image, self).save().save(*args, **kwargs)
+        super().save(*args, **kwargs)
 # You override the save method to automatically generate a slug field based on the value of title field
 
 

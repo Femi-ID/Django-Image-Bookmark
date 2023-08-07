@@ -40,7 +40,7 @@ class ImageCreateForm(forms.ModelForm):
         # In this way, you save the file to the media directory of your project.
         # You pass the save=False parameter to avoid saving the object to the database yet.
         # to maintain the same behavior as the save() method you override,
-        # you save the form to the database only when the commit=True (i the views section)
+        # you save the form to the database only when the commit=True (in the views section)
         if commit:
             image.save()
 
