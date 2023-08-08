@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.utils.text import slugify
-
+from django.urls import reverse
 # Create your models here.
 
 
@@ -34,4 +34,8 @@ class Image(models.Model):
         super().save(*args, **kwargs)
 # You override the save method to automatically generate a slug field based on the value of title field
 
+    def get_absolute_url(self):
+        return reverse('images:detail', args=[self.id, self.slug])
+        # the common pattern for providing canonical URLs for objects is
+        # to define a get_absolute_url() method in the model
 
