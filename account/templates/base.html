@@ -52,5 +52,35 @@
         {% block content %}
     {% endblock %}
     </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!--You load the jQuery framework from Google's CDN. You can also download jQuery
+        from https://jquery.com/ and add it to the static directory of your application instead-->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2.2.1/src/js.cookie.min.js"></script>
+    <!--You load the JS Cookie plugin from a public CDN so that you can easily interact with cookies.-->
+    <script>
+        // To read the value of the csrftoken cookie with Cookies.get().
+        var csrftoken = Cookies.get('csrftoken');
+        function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+            // To check whether the request method is safe and that the current request is not cross-domain.
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+        $(document).ready(function(){
+            {% block domready %}
+            {% endblock %}
+        });
+    </script>
+    <!-- $.ajaxSetup: Before each AJAX request, you check whether the request method is safe and that the current request is not cross-domain.
+        If the request is unsafe, you set the X-CSRFToken header with the value obtained from the cookie.
+        This setup will apply to all AJAX requests performed with jQuery.-->
+    <!--The CSRF token will be included in all AJAX requests that use unsafe HTTP methods, such as POST or PUT.-->
 </body>
 </html>

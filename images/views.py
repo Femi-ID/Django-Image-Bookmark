@@ -46,14 +46,14 @@ def image_detail(request, id, slug):
 
 
 @login_required
-@require_POST
+@require_POST  # Ensures only POST requests for this route
 def image_like(request):
     image_id = request.POST.get('id')
     action = request.POST.get('action')
     if image_id and action:
         try:
             image = Image.objects.get(id=image_id)
-            # If the action was to like the image
+            # If the action is to 'like' the image
             if action == 'like':
                 image.users_like.add(request.user)
             else:
@@ -63,3 +63,4 @@ def image_like(request):
             pass
     return JsonResponse({'status': 'error'})
 # AJAX actions:consists of sending and retrieving data from the server asynchronously, without reloading the whole page.
+# JsonResponse, returns an HTTP response as application/json content type, converts the given object into a JSON output.
