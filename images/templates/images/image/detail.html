@@ -16,9 +16,10 @@
             <img src="{% thumbnail image.image 300x0 quality=100 %}" class="image-detail">
         </a>
 
-        {% with total_likes=image.users_like.count user_like=image.users_
+        {% with total_likes=image.users_like.count users_like=image.users_
         like.all %}
-        <!--You use with template tag to store variables and avoid executing it twice.-->
+        <!--You use 'with' template tag to store variables and avoid executing it twice.-->
+
             <div class="image-info">
                 <div>
                     <span class="count">
@@ -26,8 +27,8 @@
                         like{{ total_likes|pluralize }}
                     </span>
                     <a href="#" data-id="{{ image.id }}" data-action="{% if request.user in users_like %}un{% endif %}like"
-                       <!--Data attributes are used to store custom data for your application.-->
                        class="like button">
+                       <!--Data attributes are used to store custom data for your application.-->
                         {% if request.user not in users_like %}
                             Like
                         {% else %}
