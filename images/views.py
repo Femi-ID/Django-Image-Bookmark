@@ -5,6 +5,9 @@ from .forms import ImageCreateForm
 from .models import Image
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
+from common.decorators import ajax_required
+from django.http import HttpResponse
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 
 
@@ -45,6 +48,7 @@ def image_detail(request, id, slug):
                                                         'image': image})
 
 
+@ajax_required
 @login_required
 @require_POST  # Ensures only POST requests for this route
 def image_like(request):
@@ -64,3 +68,27 @@ def image_like(request):
     return JsonResponse({'status': 'error'})
 # AJAX actions:consists of sending and retrieving data from the server asynchronously, without reloading the whole page.
 # JsonResponse, returns an HTTP response as application/json content type, converts the given object into a JSON output.
+
+
+@login_required
+def image_list(request):
+    images = Image.objects.all()
+    paginator = Paginator(images, 8)
+    page = request.GET.get('page')
+    try:
+        images = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer deliver the first page
+        images = paginator.page(1)
+    except EmptyPage:
+        if request.is_ajax():
+            # If the request is AJAX and the page is out of range, return an empty page
+            return HttpResponse('')
+        # If page is out of range, deliver last page of results
+        images = paginator.page(paginator.num_pages)
+    if request.is_ajax():
+        return render(request, 'images/image/list_ajax.html', {'section': 'images', 'images': images})
+        # This template will only contain the images of the requested page
+    return render(request, 'images/image/list.html', {'section': 'images', 'images': images})
+    # This template will extend the base.html template to display the whole page
+    # and will include the list_ajax.html template to include the list of images.
