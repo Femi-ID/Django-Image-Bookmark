@@ -24,6 +24,10 @@
                 <li {% if section == 'people' %} class="selected" {% endif %}>
                     <a href="#*">People</a>
                 </li>
+
+                <li {% if section == "images" %}class="selected"{% endif %}>
+                    <a href="{% url 'images:list' %}">Images</a>
+                </li>
             </ul>
         {% endif %}
 
@@ -75,19 +79,26 @@
         });
         $(document).ready(function(){
             {% block domready %}
+            // // click event: This function will be executed every time the user clicks on the like/unlike link.
                 $('a.like').click(function(e){
                     e.preventDefault();
+                    // $.post() to perform an asynchronous POST request to the server.
+                    // jQuery also provides a $.get() method to perform GET requests and a lowlevel $.ajax() method.
                     $.post('{% url "images:like" %}'),
                     {
+                    // POST parameters dictionary to send in the request: ID, action to be retrieved by the views
+                    // You retrieve these values from the <a> element's data-id and data-action attributes
                         id: $(this).data('action')
                     },
                     function(data){
+                    // callback function that is executed when the HTTP response is received;
+                    // it takes a data attribute that contains the content of the response
                         if (data['status'] == 'ok')
                         {
                             var previous_action = $('a.like').data('action');
 
                             // toggle data-action
-                            $('a.like').data('action', previous_action == 'like '? 'unlike' : 'like');
+                            $('a.like').data('action', previous_action == 'like' ? 'unlike' : 'like');
 
                             // toggle link text
                             $('a.like').text(previous_action == 'like' ? 'Unlike' : 'Like');
