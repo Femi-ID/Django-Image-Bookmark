@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-
+from django.contrib.auth import get_user_model
 # Create your models here.
 
 
@@ -26,3 +26,32 @@ Your user class should inherit from Django's AbstractUser class, which provides 
 implementation of the default user as an abstract model. You can read more about this method at
 https://docs.djangoproject.com/en/3.0/topics/auth/customizing/#substituting-a-custom-user-model.
 """
+
+
+class Contact(models.Model):
+    user_from = models.ForeignKey('auth.User', related_name='rel_from_set',
+                                  on_delete=models.CASCADE)
+    user_to = models.ForeignKey('auth.User', related_name='rel_to_set',
+                                on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True, db_index=True)
+
+    class Meta:
+        ordering = ('-created',)
+
+    def __str__(self):
+        return f'{self.user_from} follows {self.user_to}'
+
+
+# Add following field to User dynamically by retrieving the user model by using the generic function get_user_model()
+user_model = get_user_model()  # to monkey patch the User model, it's not a recommended way of adding fields to models.
+user_model.add_to_class('following', models.ManyToManyField('self',
+                                                            through=Contact,
+                                                            related_name='followers',
+                                                            symmetrical=False))
+
+#  you refer to 'self' in the ManyToManyField field to create a relationship to the same model
+# to define a non-symmetrical relationship (if I follow you, it doesn't mean that you automatically follow me).
+# If you want to use your custom user model, take a look at the documentation at
+# https://docs.djangoproject.com/en/3.0/topics/auth/customizing/#specifying-a-custom-user-model.
+
+

@@ -18,7 +18,7 @@
         var page = 1;
         var empty_page = false;
         var block_request = false;
-    // set block_request to true to avoid a situation where the scroll event  triggers additional AJAX requests,
+    // set block_request to true to avoid a situation where the scroll event triggers additional AJAX requests,
     // and increase the page counter by one, in order to retrieve the next page.
 
 // You use $(window).scroll() to capture the scroll event and also to define a handler function for it.
@@ -29,6 +29,7 @@
         && block_request == false) {
             block request = true;
             page += 1;
+            // $.get(): to receive the HTML response in a variable called data.
             $.get('?page=' + page, function(data) {
                 if(data == ''){
                     empty_page = true;

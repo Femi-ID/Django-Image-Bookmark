@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os.path
 from pathlib import Path
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -173,4 +174,11 @@ SOCIAL_AUTH_TWITTER_SECRET = 'uYcg20jst8prDrl1NC8cmjvBqxhg5wwjiV2LT5CzdGts9piTYJ
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_CLIENT_ID = '581823848282-llqe7nnat00hd8u2tp9hd5ruv6gpbae1.apps.googleusercontent.com'  # Google Consumer key
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'  # Google API Consumer Secret
+
+
+#  Another way to specify the URL for a model is by adding the ABSOLUTE_URL_OVERRIDES setting
+ABSOLUTE_OVERRIDES = {
+    'auth.user': lambda u: reverse_lazy('user_detail', args=[u.username])
+}
+
 

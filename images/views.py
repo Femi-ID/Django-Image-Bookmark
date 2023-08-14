@@ -5,7 +5,7 @@ from .forms import ImageCreateForm
 from .models import Image
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
-from common.decorators import ajax_required
+# from common.decorators import ajax_required
 from django.http import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
@@ -48,7 +48,7 @@ def image_detail(request, id, slug):
                                                         'image': image})
 
 
-@ajax_required
+# @ajax_required
 @login_required
 @require_POST  # Ensures only POST requests for this route
 def image_like(request):
