@@ -50,7 +50,7 @@ user_model.add_to_class('following', models.ManyToManyField('self',
                                                             symmetrical=False))
 
 #  you refer to 'self' in the ManyToManyField field to create a relationship to the same model
-# to define a non-symmetrical relationship (if I follow you, it doesn't mean that you automatically follow me).
+# symmetrical=False: defines a non-symmetrical relatship (if I follow you, it doesn't mean that you automatically follow me).
 # If you want to use your custom user model, take a look at the documentation at
 # https://docs.djangoproject.com/en/3.0/topics/auth/customizing/#specifying-a-custom-user-model.
 

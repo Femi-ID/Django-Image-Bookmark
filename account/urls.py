@@ -27,7 +27,9 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('edit_form', views.edit_form, name='edit_form'),
 
+    # URL patterns for user accounts (list and detail)
     path('users/', views.user_list,  name='user_list'),
+    path('users/follow/', views.user_follow, name='user_follow'),
     path('users/<username>/', views.user_detail, name='user_detail'),
 ]
 

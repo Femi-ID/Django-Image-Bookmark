@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'images.apps.ImagesConfig',
     'easy_thumbnails',
+    'actions.apps.ActionsConfig',
 ]
 
 # In order to test the social authentication functionality serving your site through HTTPS,
@@ -161,6 +162,7 @@ AUTHENTICATION_BACKENDS = [
     'account.authentication.EmailAuthBackend',
     'social_core.backends.facebook.FacebookOAuth2',
     'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.google.GoogleOAuth2',
 ]
 
 SOCIAL_AUTH_FACEBOOK_KEY = '606087041711702'  # Facebook ID
@@ -181,4 +183,4 @@ ABSOLUTE_OVERRIDES = {
     'auth.user': lambda u: reverse_lazy('user_detail', args=[u.username])
 }
 
-
+THUMBNAIL_DEBUG = True
