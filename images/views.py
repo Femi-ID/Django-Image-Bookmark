@@ -128,3 +128,6 @@ def image_ranking(request):
     return render(request, 'images/image/ranking.html',
                   {'section': 'images',
                    'most_viewed': most_viewed})
+
+# all Redis data types at https://redis.io/topics/data-types.
+# find the redis-py documentation at https://redis-py.readthedocs.io/.
