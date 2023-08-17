@@ -16,6 +16,7 @@ class Image(models.Model):
     created = models.DateField(auto_now_add=True, db_index=True)
     users_like = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='images_liked',
                                         blank=True)
+    total_likes = models.PositiveIntegerField(db_index=True, default=0)
     # many-to-many relationship because a user might like multiple images and each image can be liked by multiple users.
     # The ManyToManyField can be defined in either of the two related models.
     # many-to-many relationships at: https://docs.djangoproject.com/en/3.0/topics/db/examples/many_to_many/.
@@ -36,6 +37,5 @@ class Image(models.Model):
 
     def get_absolute_url(self):
         return reverse('images:detail', args=[self.id, self.slug])
-        # the common pattern for providing canonical URLs for objects is
-        # to define a get_absolute_url() method in the model
+# the common pattern for providing canonical URLs for objects is to define a get_absolute_url() method in the model
 
